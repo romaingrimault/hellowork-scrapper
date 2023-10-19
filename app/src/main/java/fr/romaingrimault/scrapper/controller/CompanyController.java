@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,7 @@ public class CompanyController {
     private CompanyService companyService;
 
     @Operation(summary ="Retourne une entreprise ainsi que ses offres d'emploi déjà sauvegardé")
-    @PostMapping("/")
+    @GetMapping("/")
     public Company getCompany(@Parameter(description = "Nom de l'entreprise") @RequestParam String name){
         return companyService.getCompany(name);
     }   

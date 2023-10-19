@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +25,7 @@ public class OfferController {
      * @return retourne l'offre
      */
     @Operation(summary ="Retourne une offre à partir de sa reférence")
-    @PostMapping("/")
+    @GetMapping("/")
     public Offer getOffer(@Parameter(description = "Reférence de l'offre") @RequestParam String ref){
         return offerService.getOffer(ref);
     }
@@ -36,7 +35,7 @@ public class OfferController {
      * @return retourne l'url de l'offre
      */
     @Operation(summary ="Retourne l'url de l'offre à partir de sa reférence")
-    @PostMapping("/getUrl")
+    @GetMapping("/getUrl")
     public String getUrl(@Parameter(description = "Reférence de l'offre") @RequestParam String ref){
         return offerService.getUrl(ref);
     }
