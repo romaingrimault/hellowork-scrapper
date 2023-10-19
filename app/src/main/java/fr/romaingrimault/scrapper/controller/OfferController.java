@@ -24,7 +24,7 @@ public class OfferController {
      * @param ref prend la ref d'une offre  
      * @return retourne l'offre
      */
-    @Operation(summary ="Retourne une offre à partir de sa reférence")
+    @Operation(summary ="Retourne une offre à partir de sa référence")
     @GetMapping("/")
     public Offer getOffer(@Parameter(description = "Reférence de l'offre") @RequestParam String ref){
         return offerService.getOffer(ref);
@@ -34,13 +34,13 @@ public class OfferController {
      * @param ref prend la ref d'une offre 
      * @return retourne l'url de l'offre
      */
-    @Operation(summary ="Retourne l'url de l'offre à partir de sa reférence")
+    @Operation(summary ="Retourne l'url de l'offre à partir de sa référence")
     @GetMapping("/getUrl")
-    public String getUrl(@Parameter(description = "Reférence de l'offre") @RequestParam String ref){
+    public String getUrl(@Parameter(description = "référence de l'offre") @RequestParam String ref){
         return offerService.getUrl(ref);
     }
 
-    @Operation(summary ="Retourne l'enssemble des offres")
+    @Operation(summary ="Retourne l'ensemble des offres")
     @GetMapping("/all")
     public List<Offer> getAll(){
         return offerService.getAllOffers();
