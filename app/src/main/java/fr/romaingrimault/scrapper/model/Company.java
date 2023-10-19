@@ -3,8 +3,6 @@ package fr.romaingrimault.scrapper.model;
 
 import java.util.Set;
 
-import javax.swing.text.StyledEditorKit.BoldAction;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
