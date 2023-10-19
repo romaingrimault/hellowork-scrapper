@@ -9,7 +9,8 @@ Faire une petite application en Java qui permet de :
 
 ## Initialisation du projets 
 /!\ Prérequis docker 
-télécarger l'image docker:
+
+télécharger l'image docker:
 
 docker image pull romain53/scrapper-hellowork:2
 
