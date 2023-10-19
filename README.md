@@ -41,3 +41,10 @@ Utilisation des xPath pour récupérer en une requête la node html voulu et en 
 
 ### Regex
 Utilisation de regex pour récupérer la ref peu importe son format
+
+## Amélioration possible
+### Test
+Mise en place de test et de CI pour améliorer la performance du développement
+
+### Syncro complète
+Récupération de l'ensemble des annonces d'entreprise et suppression de celle ayant été supprimé sur le site
