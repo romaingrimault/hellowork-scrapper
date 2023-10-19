@@ -48,8 +48,8 @@ public class OfferService {
 
     public List<Offer> getAllOffers(){
        List offerList = new ArrayList<>();
-        offerRepository.findAll().forEach(user -> {
-            offerList.add(user);
+        offerRepository.findAll().forEach(offer -> {
+            offerList.add(offer);
         });
         return offerList;
     }

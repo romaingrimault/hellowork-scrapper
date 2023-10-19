@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Offer {
@@ -19,16 +21,21 @@ public class Offer {
     @Column(name = "ref")
     private String ref;
 
-    
-    
+    @Column(name = "companyId", insertable = false, updatable = false)
+    private String companyId;
+
+    @ManyToOne
+    @JoinColumn(name = "companyId", nullable = false)
+    private Company company;
 
     public Offer() {
     }
 
-    public Offer(String url, String ref) {
+    public Offer(String url, String ref, Company company) {
         super();
         this.url = url;
-        this.ref = ref;
+        this.ref = ref;        
+        this.company = company;
     }
 
     public String getId() {
@@ -55,5 +62,7 @@ public class Offer {
         this.ref = ref;
     }
 
-    
+    public String getCompanyId() {
+        return companyId;
+    }
 }

@@ -13,6 +13,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.DomNode;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
+import fr.romaingrimault.scrapper.model.Company;
 import fr.romaingrimault.scrapper.model.Offer;
 
 
@@ -24,6 +25,8 @@ public class ScrapperService {
     @Autowired
     private OfferService offerService;
 
+    @Autowired
+    private CompanyService companyService;
     /**
      * Parse les offres d'emploi pour les sauvegardées en base de données
      * @param url
@@ -35,23 +38,28 @@ public class ScrapperService {
         url = url.replace("\"", "");
         try{
             HtmlPage page = this.webClient.getPage(url);
-            ArrayList<String> offersUrl = this.getOfferUrl(page);
-            offersUrl.forEach( offerUrl -> {
-                try {
-                    String ref = this.getRef(this.webClient.getPage(offerUrl));
-                    if(!ref.isEmpty() && !offerService.isOffer(ref)){
-                        System.out.println("create offer wth ref "+ref);
-                        Offer offer = new Offer(offerUrl, ref);
-                        offerService.addOffer(offer);    
+            Company company = this.getCompanyName(page);
+            if(company.getCompanyName() != ""){
+                ArrayList<String> offersUrl = this.getOfferUrl(page);
+                offersUrl.forEach( offerUrl -> {
+                    try {
+                        String ref = this.getRef(this.webClient.getPage(offerUrl));
+                        Offer tmpOffer = offerService.getOffer(ref);
+                        if(!ref.isEmpty() && !company.isOffer(tmpOffer)){
+                            System.out.println("create offer wth ref "+ref);
+                            Offer offer = new Offer(offerUrl, ref,company);
+                            offerService.addOffer(offer);
+                        }
+                        else{
+                            System.out.println("ref not created");
+                        }
+                        
+                    } catch (Exception e) {
+                    System.out.println(e);
                     }
-                    else{
-                        System.out.println("No ref find");
-                    }
-                    
-                } catch (Exception e) {
-                  System.out.println(e);
-                }
-            });
+                });
+            }
+
         }
         catch(Exception e){
             System.out.println(e);
@@ -88,15 +96,33 @@ public class ScrapperService {
      */
     private String getRef(HtmlPage page){
         String ref = "";
-            String xPath = "//div[@class='tw-layout-inner-grid']/div[last()]//section/span[last()]";
-            List<DomNode> offersList = (List<DomNode>) page.getByXPath(xPath);
-            if(offersList.size() == 1){
-                String htmlText = offersList.get(0).asText();
-                String[] parties = htmlText.split("Réf : ") ;
-                if (parties.length > 1) {
-                    ref = parties[1];
-                }
+        String xPath = "//div[@class='tw-layout-inner-grid']/div[last()]//section/span[last()]";
+        List<DomNode> offersList = (List<DomNode>) page.getByXPath(xPath);
+        if(offersList.size() == 1){
+            String htmlText = offersList.get(0).asText();
+            String[] parties = htmlText.split("Réf : ") ;
+            if (parties.length > 1) {
+                ref = parties[1];
             }
+        }
         return ref;
+    }
+
+
+    private Company getCompanyName(HtmlPage page){
+        Company company = new Company();
+        String xPath = "//h2/span[@class='strong']";
+        DomNode node =  (DomNode) page.getByXPath(xPath).get(0);
+        if(node != null){
+            String companyName = node.asText().trim();
+            if(companyService.isCompany(companyName)){
+                company = companyService.getCompany(companyName);
+            }
+            else{
+                company = new Company(companyName);
+                companyService.addCompany(company);
+            }
+        }
+        return company;
     }
 }
