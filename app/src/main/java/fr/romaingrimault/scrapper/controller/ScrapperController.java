@@ -16,6 +16,7 @@ public class ScrapperController {
     private ScrapperService scrapperService;
 
     /**
+     * Prends en paramètre l'URL d'une page d'offres d'emploi d'entreprise du site Hellowork pour les analyser. 
      * @param url
      * @throws Exception
      */

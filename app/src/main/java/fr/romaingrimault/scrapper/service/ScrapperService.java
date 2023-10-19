@@ -24,6 +24,11 @@ public class ScrapperService {
     @Autowired
     private OfferService offerService;
 
+    /**
+     * Parse les offres d'emploi pour les sauvegardées en base de données
+     * @param url
+     * @throws Exception
+     */
     public void scrapUrl(String url) throws Exception{
         this.webClient.getOptions().setCssEnabled(false);
         this.webClient.getOptions().setJavaScriptEnabled(false);
@@ -53,6 +58,11 @@ public class ScrapperService {
         }
     }
 
+    /**
+     * Parse les offres d'emploi de la page pour en générer les urls
+     * @param page
+     * @return
+     */
     private ArrayList<String> getOfferUrl(HtmlPage page){
         List<DomNode> offersList = page.querySelectorAll("[data-offer-extract]");   
         ArrayList<String> offresId = new ArrayList<>();
@@ -71,6 +81,11 @@ public class ScrapperService {
     }
 
 
+    /**
+     * Extraction de la référence de l'offre
+     * @param page
+     * @return
+     */
     private String getRef(HtmlPage page){
         String ref = "";
             String xPath = "//div[@class='tw-layout-inner-grid']/div[last()]//section/span[last()]";
