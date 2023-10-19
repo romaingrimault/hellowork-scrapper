@@ -35,7 +35,7 @@ public class OfferService {
             return offer.getUrl();
         }
         else{
-            return "Pas d'offre trouvé avec la référence " + ref;
+            return "Pas d'offre trouvée avec la référence " + ref;
         }
         
     }
