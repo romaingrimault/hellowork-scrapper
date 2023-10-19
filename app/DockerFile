@@ -1,0 +1,7 @@
+FROM openjdk:17
+
+WORKDIR /dockerApp
+
+COPY target/scrapper.jar /dockerApp/scrapper.jar
+
+CMD ["java", "-jar", "scrapper.jar"]
